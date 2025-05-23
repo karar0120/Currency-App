@@ -1,1 +1,3 @@
-class AppString {}
+class AppString {
+  static const String currencyApp = "Currency App";
+}

@@ -18,7 +18,7 @@ class CurrencyApp extends StatelessWidget {
         title: AppString.currencyApp,
         debugShowCheckedModeBanner: false,
         theme: themeData,
-        initialRoute: Routes.splashScreen,
+        initialRoute: Routes.convertScreen,
         onGenerateRoute: AppRoute.generateRoute,
       ),
     );

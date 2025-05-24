@@ -30,21 +30,18 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
   }
 
   @override
-  Future<ApiResult<List<CurrencyRate>>> getHistoricalRates() async {
+  Future<ApiResult<List<CurrencyRate>>> getHistoricalRates(
+      {required ConversionRequestModel request}) async {
     try {
-      // final response = await remote.getHistoricalRates();
-
-      final List<CurrencyRate> rates = [];
-
-      // response.rates.forEach((date, rateMap) {
-      //   final rate = rateMap[symbols] ?? 0.0;
-      //   rates.add(CurrencyRate(
-      //     base: response.base,
-      //     target: symbols,
-      //     rate: rate,
-      //     date: date,
-      //   ));
-      // });
+      final response = await remote.getHistoricalRates(request);
+      final rates = response.results.entries.map((entry) {
+        return CurrencyRate(
+          date: response.date,
+          base: response.base,
+          currency: entry.key,
+          rate: entry.value,
+        );
+      }).toList();
 
       return ApiResult.success(rates);
     } catch (error) {

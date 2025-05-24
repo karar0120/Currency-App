@@ -6,8 +6,10 @@ import 'package:currency_app/features/data/repositories/currency_repository_impl
 import 'package:currency_app/features/domain/repositories/currency_repository.dart';
 import 'package:currency_app/features/domain/usecases/get_all_currency.dart';
 import 'package:currency_app/features/domain/usecases/get_conversion_rate.dart';
+import 'package:currency_app/features/domain/usecases/get_historical_rates.dart';
 import 'package:currency_app/features/presentation/cubit/conversion/conversion_cubit.dart';
 import 'package:currency_app/features/presentation/cubit/currency/currency_cubit.dart';
+import 'package:currency_app/features/presentation/cubit/historical_rates/historical_rates_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -49,5 +51,15 @@ Future<void> initConvertModule() async {
         ));
     getIt.registerFactory<ConversionCubit>(
         () => ConversionCubit(getConversionRate: getIt<GetConversionRate>()));
+  }
+}
+
+Future<void> initHistoricalModule() async {
+  if (!GetIt.I.isRegistered<GetHistoricalRates>()) {
+    getIt.registerFactory<GetHistoricalRates>(() => GetHistoricalRates(
+          repository: getIt(),
+        ));
+    getIt.registerFactory<HistoricalRatesCubit>(() =>
+        HistoricalRatesCubit(getHistoricalRates: getIt<GetHistoricalRates>()));
   }
 }

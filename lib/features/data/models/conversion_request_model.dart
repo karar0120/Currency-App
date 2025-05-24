@@ -1,12 +1,12 @@
 class ConversionRequestModel {
   final String from;
   final String to;
-  final num amount;
+  final num? amount;
 
   ConversionRequestModel({
     required this.from,
     required this.to,
-    required this.amount,
+    this.amount,
   });
 
   Map<String, dynamic> toQueryParameters() {

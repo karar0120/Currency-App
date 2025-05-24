@@ -21,8 +21,10 @@ abstract class ApiService {
   );
   @GET(ApiConstants.historical)
   Future<HistoryResponseModel> getHistoricalRates(
-    @Query("date") String date,
     @Query("api_key") String apiKey,
+    @Query("date") String date,
+    @Query("from") String from,
+    @Query("to") String to,
   );
 
   @GET(ApiConstants.allCurrencies)

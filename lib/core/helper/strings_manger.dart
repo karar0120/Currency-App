@@ -8,4 +8,6 @@ class AppString {
   static const String convertdAmount = 'Converted Amount';
   static const String currency = 'Currency';
   static const String calcate = 'Calculate';
+  static const String history = 'Eexchange History';
+  static const String time = 'Time';
 }

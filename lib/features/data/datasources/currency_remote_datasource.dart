@@ -4,6 +4,7 @@ import 'package:currency_app/features/data/models/conversion_request_model.dart'
 import 'package:currency_app/features/data/models/currency_response_model.dart';
 import '../models/conversion_response_model.dart';
 import '../models/history_response_model.dart';
+import 'package:intl/intl.dart';
 
 class CurrencyRemoteDataSource {
   final ApiService api;
@@ -16,15 +17,18 @@ class CurrencyRemoteDataSource {
       ApiConstants.apiKey,
       request.from,
       request.to,
-      request.amount,
+      request.amount!,
     );
   }
 
-  Future<HistoryResponseModel> getHistoricalRates() async {
+  Future<HistoryResponseModel> getHistoricalRates(
+      ConversionRequestModel request) async {
     return await api.getHistoricalRates(
-      ApiConstants.apiKey,
-      "USD",
-    );
+        ApiConstants.apiKey,
+        DateFormat('yyyy-MM-dd')
+            .format(DateTime.now().subtract(const Duration(days: 4))),
+        request.from,
+        request.to);
   }
 
   Future<CurrencyResponseModel> getAllCurrency() async {

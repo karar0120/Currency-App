@@ -68,13 +68,17 @@ class _ApiService implements ApiService {
 
   @override
   Future<HistoryResponseModel> getHistoricalRates(
-    String date,
     String apiKey,
+    String date,
+    String from,
+    String to,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'date': date,
       r'api_key': apiKey,
+      r'date': date,
+      r'from': from,
+      r'to': to,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;

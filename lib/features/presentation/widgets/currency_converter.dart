@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:currency_app/features/presentation/widgets/currency_convert_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,38 +80,43 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
           convertedAmountController.text = result.toStringAsFixed(2);
         });
       },
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 50.h),
-              const Text(AppString.amount),
-              SizedBox(height: 10.h),
-              CurrencyInputSection(
-                label: AppString.currency,
-                selectedCurrency: fromCurrency,
-                onCurrencyChanged: (val) => setState(() => fromCurrency = val),
-                controller: amountController,
-              ),
-              SizedBox(height: 16.h),
-              SwapButton(onPressed: _swapCurrencies),
-              const Text(AppString.convertdAmount),
-              SizedBox(height: 10.h),
-              CurrencyInputSection(
-                label: AppString.currency,
-                selectedCurrency: toCurrency,
-                onCurrencyChanged: (val) => setState(() => toCurrency = val),
-                controller: convertedAmountController,
-              ),
-              const SizedBox(height: 24),
-              ConversionResult(
-                toCurrency: toCurrency,
-              ),
-              const SizedBox(height: 16),
-              CalculateButton(onPressed: _convertCurrency),
-            ],
+      child: Scaffold(
+        appBar: CurrencyConvertAppBar(
+            fromCurrency: fromCurrency, toCurrency: toCurrency),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 50.h),
+                const Text(AppString.amount),
+                SizedBox(height: 10.h),
+                CurrencyInputSection(
+                  label: AppString.currency,
+                  selectedCurrency: fromCurrency,
+                  onCurrencyChanged: (val) =>
+                      setState(() => fromCurrency = val),
+                  controller: amountController,
+                ),
+                SizedBox(height: 16.h),
+                SwapButton(onPressed: _swapCurrencies),
+                const Text(AppString.convertdAmount),
+                SizedBox(height: 10.h),
+                CurrencyInputSection(
+                  label: AppString.currency,
+                  selectedCurrency: toCurrency,
+                  onCurrencyChanged: (val) => setState(() => toCurrency = val),
+                  controller: convertedAmountController,
+                ),
+                const SizedBox(height: 24),
+                ConversionResult(
+                  toCurrency: toCurrency,
+                ),
+                const SizedBox(height: 16),
+                CalculateButton(onPressed: _convertCurrency),
+              ],
+            ),
           ),
         ),
       ),

@@ -8,5 +8,6 @@ abstract class CurrencyRepository {
   Future<ApiResult<CurrencyRate>> getConversionRate(
       {required ConversionRequestModel request});
 
-  Future<ApiResult<List<CurrencyRate>>> getHistoricalRates();
+  Future<ApiResult<List<CurrencyRate>>> getHistoricalRates(
+      {required ConversionRequestModel request});
 }

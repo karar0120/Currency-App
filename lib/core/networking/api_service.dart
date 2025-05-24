@@ -1,3 +1,6 @@
+import 'package:currency_app/features/data/models/conversion_response_model.dart';
+import 'package:currency_app/features/data/models/currency_response_model.dart';
+import 'package:currency_app/features/data/models/history_response_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -9,20 +12,21 @@ part 'api_service.g.dart';
 abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
 
-  // @POST(ApiConstants.login)
-  // Future<LoginResponse> login(
-  //   @Body() LoginRequestBody loginRequestBody,
-  // );
+  @GET(ApiConstants.convert)
+  Future<ConversionResponseModel> getConversionRate(
+    @Query("api_key") String apiKey,
+    @Query("from") String from,
+    @Query("to") String to,
+    @Query("amount") num amount,
+  );
+  @GET(ApiConstants.historical)
+  Future<HistoryResponseModel> getHistoricalRates(
+    @Query("date") String date,
+    @Query("api_key") String apiKey,
+  );
 
-  // @GET(ApiConstants.animals)
-  // Future<AnimalsResponse> getAnimals(
-  //   @Queries() GetAnimalsQueryParams getAnimalsQueryParams,
-  //   @Header("Authorization") String token,
-  // );
-
-  // @GET(ApiConstants.animalsDetails)
-  // Future<AnimalsDetailsResponse> getAnimalsDetails(
-  //   @Path("id") int id,
-  //   @Header("Authorization") String token,
-  // );
+  @GET(ApiConstants.allCurrencies)
+  Future<CurrencyResponseModel> getAllCurrency(
+    @Query("api_key") String apiKey,
+  );
 }

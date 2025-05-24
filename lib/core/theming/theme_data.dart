@@ -4,6 +4,6 @@ import 'package:flutter/material.dart';
 ThemeData themeData = ThemeData(
     appBarTheme: const AppBarTheme(backgroundColor: ColorsManager.dark),
     primaryColor: ColorsManager.mainBlue,
-    scaffoldBackgroundColor: ColorsManager.gray,
+    scaffoldBackgroundColor: const Color.fromRGBO(255, 255, 255, 1),
     cardColor: ColorsManager.dark,
     indicatorColor: ColorsManager.gray);

@@ -1,63 +1,53 @@
-// import 'package:dio/dio.dart';
+import 'package:currency_app/core/networking/api_service.dart';
+import 'package:currency_app/core/networking/dio_factory.dart';
+import 'package:currency_app/core/networking/netwotk_info.dart';
+import 'package:currency_app/features/data/datasources/currency_remote_datasource.dart';
+import 'package:currency_app/features/data/repositories/currency_repository_impl.dart';
+import 'package:currency_app/features/domain/repositories/currency_repository.dart';
+import 'package:currency_app/features/domain/usecases/get_all_currency.dart';
+import 'package:currency_app/features/domain/usecases/get_conversion_rate.dart';
+import 'package:currency_app/features/presentation/cubit/conversion/conversion_cubit.dart';
+import 'package:currency_app/features/presentation/cubit/currency/currency_cubit.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-// import 'package:internet_connection_checker/internet_connection_checker.dart';
-// import 'package:pets_finder/core/helper/shared_preferences.dart';
-// import 'package:pets_finder/core/networking/api_service.dart';
-// import 'package:pets_finder/core/networking/dio_factory.dart';
-// import 'package:pets_finder/core/networking/netwotk_info.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupGetIt() async {
-//   getIt.registerLazySingleton<NetworkInfo>(() =>
-//       NetworkInfoImpl(internetConnectionChecker: InternetConnectionChecker()));
+  getIt.registerLazySingleton<NetworkInfo>(() =>
+      NetworkInfoImpl(internetConnectionChecker: InternetConnectionChecker()));
 
-//   final sharedPreferences = await SharedPreferences.getInstance();
+  // Dio & ApiService
+  Dio dio = DioFactory.getDio();
+  getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
 
-//   getIt.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  getIt.registerLazySingleton<CurrencyRemoteDataSource>(
+      () => CurrencyRemoteDataSource(getIt<ApiService>()));
 
-//   getIt.registerLazySingleton<AppPreferences>(
-//       () => AppPreferences(sharedPreferences: getIt()));
-//   // Dio & ApiService
-//   Dio dio = DioFactory.getDio();
-//   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
+  //get currency repository
 
-//   // login
-//   getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(
-//       getIt<ApiService>(), getIt<AppPreferences>(), getIt<NetworkInfo>()));
+  getIt.registerLazySingleton<CurrencyRepository>(() => CurrencyRepositoryImpl(
+        getIt<CurrencyRemoteDataSource>(),
+      ));
+}
 
-//   //get animals
+Future<void> initCurrencyModule() async {
+  if (!GetIt.I.isRegistered<GetAllCurrency>()) {
+    getIt.registerFactory<GetAllCurrency>(() => GetAllCurrency(
+          repository: getIt(),
+        ));
+    getIt.registerFactory<CurrencyCubit>(
+        () => CurrencyCubit(getAllCurrency: getIt<GetAllCurrency>()));
+  }
+}
 
-//   getIt.registerLazySingleton<AnimalRepo>(() => AnimalRepo(
-//         getIt<ApiService>(),
-//         getIt<AppPreferences>(),
-//         getIt<NetworkInfo>(),
-//         getIt<LoginRepo>(),
-//       ));
-//   getIt.registerLazySingleton<AnimalsRepository>(() => AnimalRepo(
-//       getIt<ApiService>(),
-//       getIt<AppPreferences>(),
-//       getIt<NetworkInfo>(),
-//       getIt<LoginRepo>()));
-// }
-
-// Future<void> initAnimalsModule() async {
-//   if (!GetIt.I.isRegistered<GetAnimalsUseCase>()) {
-//     getIt.registerFactory<GetAnimalsUseCase>(() => GetAnimalsUseCase(
-//           animalsRepository: getIt(),
-//         ));
-//     getIt.registerFactory<AnimalsCubit>(
-//         () => AnimalsCubit(getIt<GetAnimalsUseCase>()));
-//   }
-// }
-
-// Future<void> initAnimalsDetailsModule() async {
-//   if (!GetIt.I.isRegistered<GetAnimalsDetailsUseCase>()) {
-//     getIt.registerFactory<GetAnimalsDetailsUseCase>(
-//         () => GetAnimalsDetailsUseCase(
-//               animalsRepository: getIt(),
-//             ));
-//     getIt.registerFactory<AnimalDetailsCubit>(
-//         () => AnimalDetailsCubit(getIt<GetAnimalsDetailsUseCase>()));
-//   }
+Future<void> initConvertModule() async {
+  if (!GetIt.I.isRegistered<GetConversionRate>()) {
+    getIt.registerFactory<GetConversionRate>(() => GetConversionRate(
+          repository: getIt(),
+        ));
+    getIt.registerFactory<ConversionCubit>(
+        () => ConversionCubit(getConversionRate: getIt<GetConversionRate>()));
+  }
 }

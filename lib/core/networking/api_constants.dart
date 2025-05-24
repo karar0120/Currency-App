@@ -1,12 +1,9 @@
 class ApiConstants {
-  static const String baseUrl = "https://api.petfinder.com/v2/";
-  static const String login = "oauth2/token";
-  static const String animals = "animals";
-  static const String animalsDetails = 'animals/{id}';
-
-  static const String clientId =
-      'JwsIhhsuzL7Ga4y7Hkx3YSAVHKzbqsxiHuiXrcHvGi87Vu05Gq';
-  static const String clientSecret = 'NgYQmGhwAmD03y9gz4BGe7yxfo0a7zWXVxoYNCP6';
+  static const String baseUrl = "https://api.beta.fastforex.io/";
+  static const String allCurrencies = "currencies";
+  static const String convert = "convert";
+  static const String historical = "historical";
+  static const String apiKey = "74ebf115e5-75b203cd84-swpwyf";
 }
 
 class ApiErrors {

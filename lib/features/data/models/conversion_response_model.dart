@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'conversion_response_model.g.dart';
 
@@ -7,7 +6,7 @@ part 'conversion_response_model.g.dart';
 class ConversionResponseModel {
   final String base;
   final num amount;
-  final Result result;
+  final Map<String, dynamic> result;
 
   ConversionResponseModel({
     required this.base,
@@ -19,13 +18,8 @@ class ConversionResponseModel {
       _$ConversionResponseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ConversionResponseModelToJson(this);
-}
 
-@JsonSerializable()
-class Result {
-  num? rate;
-
-  Result({required this.rate});
-
-  factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
+  num? getRate(String toCurrency) {
+    return result[toCurrency] as num?;
+  }
 }

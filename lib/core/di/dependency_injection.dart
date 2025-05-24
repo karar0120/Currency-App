@@ -7,6 +7,7 @@ import 'package:currency_app/features/domain/repositories/currency_repository.da
 import 'package:currency_app/features/domain/usecases/get_all_currency.dart';
 import 'package:currency_app/features/domain/usecases/get_conversion_rate.dart';
 import 'package:currency_app/features/presentation/cubit/conversion/conversion_cubit.dart';
+import 'package:currency_app/features/presentation/cubit/currency/currency_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -31,16 +32,22 @@ Future<void> setupGetIt() async {
       ));
 }
 
+Future<void> initCurrencyModule() async {
+  if (!GetIt.I.isRegistered<GetAllCurrency>()) {
+    getIt.registerFactory<GetAllCurrency>(() => GetAllCurrency(
+          repository: getIt(),
+        ));
+    getIt.registerFactory<CurrencyCubit>(
+        () => CurrencyCubit(getAllCurrency: getIt<GetAllCurrency>()));
+  }
+}
+
 Future<void> initConvertModule() async {
   if (!GetIt.I.isRegistered<GetConversionRate>()) {
     getIt.registerFactory<GetConversionRate>(() => GetConversionRate(
           repository: getIt(),
         ));
-    getIt.registerFactory<GetAllCurrency>(() => GetAllCurrency(
-          repository: getIt(),
-        ));
-    getIt.registerFactory<ConversionCubit>(() => ConversionCubit(
-        getConversionRate: getIt<GetConversionRate>(),
-        getAllCurrency: getIt<GetAllCurrency>()));
+    getIt.registerFactory<ConversionCubit>(
+        () => ConversionCubit(getConversionRate: getIt<GetConversionRate>()));
   }
 }

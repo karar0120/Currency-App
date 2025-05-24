@@ -1,4 +1,3 @@
 class Routes {
-  static const String splashScreen = "/";
-  static const String convertScreen = "/convertScreen";
+  static const String convertScreen = "/";
 }

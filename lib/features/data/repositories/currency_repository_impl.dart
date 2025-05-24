@@ -1,5 +1,6 @@
 import 'package:currency_app/core/networking/api_error_handler.dart';
 import 'package:currency_app/core/networking/api_result.dart';
+import 'package:currency_app/features/data/models/conversion_request_model.dart';
 import 'package:currency_app/features/domain/entities/currency.dart';
 
 import '../../domain/entities/currency_rate.dart';
@@ -12,14 +13,15 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
   CurrencyRepositoryImpl(this.remote);
 
   @override
-  Future<ApiResult<CurrencyRate>> getConversionRate() async {
+  Future<ApiResult<CurrencyRate>> getConversionRate(
+      {required ConversionRequestModel request}) async {
     try {
-      final response = await remote.getConversionRate();
+      final response = await remote.getConversionRate(request);
 
       return ApiResult.success(
         CurrencyRate(
           base: response.base,
-          rate: response.result.rate ?? 0.0,
+          rate: response.result[request.to] ?? 0.0,
         ),
       );
     } catch (error) {

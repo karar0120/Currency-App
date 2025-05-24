@@ -11,7 +11,7 @@ ConversionResponseModel _$ConversionResponseModelFromJson(
     ConversionResponseModel(
       base: json['base'] as String,
       amount: json['amount'] as num,
-      result: Result.fromJson(json['result'] as Map<String, dynamic>),
+      result: json['result'] as Map<String, dynamic>,
     );
 
 Map<String, dynamic> _$ConversionResponseModelToJson(
@@ -20,12 +20,4 @@ Map<String, dynamic> _$ConversionResponseModelToJson(
       'base': instance.base,
       'amount': instance.amount,
       'result': instance.result,
-    };
-
-Result _$ResultFromJson(Map<String, dynamic> json) => Result(
-      rate: json['rate'] as num?,
-    );
-
-Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
-      'rate': instance.rate,
     };

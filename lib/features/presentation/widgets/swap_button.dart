@@ -1,3 +1,4 @@
+import 'package:currency_app/core/helper/values_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,15 +13,15 @@ class SwapButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(AppPadding.p8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30.r)),
+            borderRadius: BorderRadius.all(Radius.circular(AppSize.s30.r)),
             color: Colors.blue,
           ),
           child: const Icon(
             Icons.swap_vert,
             color: Colors.white,
-            size: 40,
+            size: AppSize.s40,
           ),
         ),
       ),

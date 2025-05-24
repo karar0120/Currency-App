@@ -1,9 +1,11 @@
+import 'package:currency_app/core/helper/spacing.dart';
+import 'package:currency_app/core/helper/strings_manger.dart';
+import 'package:currency_app/core/helper/values_manger.dart';
 import 'package:currency_app/features/presentation/cubit/currency/currency_cubit.dart';
 import 'package:currency_app/features/presentation/widgets/amount_text_filed.dart';
 import 'package:currency_app/features/presentation/widgets/currency_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrencyInputSection extends StatelessWidget {
   final String label;
@@ -27,7 +29,7 @@ class CurrencyInputSection extends StatelessWidget {
           initial: () => const CircularProgressIndicator(),
           loading: () => const CircularProgressIndicator(),
           error: (error) => Text(
-            'Error loading currencies: $error',
+            '${AppString.error}: $error',
             style: const TextStyle(color: Colors.red),
           ),
           success: (currencies) => Row(
@@ -40,7 +42,7 @@ class CurrencyInputSection extends StatelessWidget {
                   selectedCurrency: selectedCurrency,
                 ),
               ),
-              SizedBox(width: 16.w),
+              horizontalSpace(AppSize.s16),
               Flexible(
                 child: AmountTextField(controller: controller),
               ),

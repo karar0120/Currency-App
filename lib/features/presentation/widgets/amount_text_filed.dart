@@ -1,3 +1,4 @@
+import 'package:currency_app/core/helper/strings_manger.dart';
 import 'package:flutter/material.dart';
 
 class AmountTextField extends StatelessWidget {
@@ -11,7 +12,7 @@ class AmountTextField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
-        labelText: 'Amount',
+        labelText: AppString.amount,
         border: OutlineInputBorder(),
       ),
     );

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:currency_app/core/helper/spacing.dart';
+import 'package:currency_app/core/helper/values_manger.dart';
 import 'package:currency_app/features/presentation/widgets/currency_convert_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,14 +86,14 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
         appBar: CurrencyConvertAppBar(
             fromCurrency: fromCurrency, toCurrency: toCurrency),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: AppPadding.p20.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 50.h),
+                verticalSpace(AppSize.s50),
                 const Text(AppString.amount),
-                SizedBox(height: 10.h),
+                verticalSpace(AppSize.s8),
                 CurrencyInputSection(
                   label: AppString.currency,
                   selectedCurrency: fromCurrency,
@@ -99,21 +101,21 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
                       setState(() => fromCurrency = val),
                   controller: amountController,
                 ),
-                SizedBox(height: 16.h),
+                verticalSpace(AppSize.s16),
                 SwapButton(onPressed: _swapCurrencies),
                 const Text(AppString.convertdAmount),
-                SizedBox(height: 10.h),
+                verticalSpace(AppSize.s8),
                 CurrencyInputSection(
                   label: AppString.currency,
                   selectedCurrency: toCurrency,
                   onCurrencyChanged: (val) => setState(() => toCurrency = val),
                   controller: convertedAmountController,
                 ),
-                const SizedBox(height: 24),
+                verticalSpace(AppSize.s16),
                 ConversionResult(
                   toCurrency: toCurrency,
                 ),
-                const SizedBox(height: 16),
+                verticalSpace(AppSize.s16),
                 CalculateButton(onPressed: _convertCurrency),
               ],
             ),

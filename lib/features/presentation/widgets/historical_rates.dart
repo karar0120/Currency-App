@@ -1,3 +1,4 @@
+import 'package:currency_app/core/helper/strings_manger.dart';
 import 'package:currency_app/features/presentation/cubit/historical_rates/historical_rates_cubit.dart';
 import 'package:currency_app/features/presentation/widgets/historical_item.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,11 @@ class HistoricalRatesView extends StatelessWidget {
     return BlocBuilder<HistoricalRatesCubit, HistoricalRatesState>(
         builder: (context, state) {
       return state.when(
-        initial: () => const Center(child: Text('Please request data')),
+        initial: () => const SizedBox(),
         loading: () => const Center(child: CircularProgressIndicator()),
         success: (conversionRates) {
           if (conversionRates.isEmpty) {
-            return const Center(child: Text('No data available'));
+            return const Center(child: Text(AppString.noDataAvailable));
           }
           return Column(
             children: [
@@ -35,7 +36,7 @@ class HistoricalRatesView extends StatelessWidget {
             ],
           );
         },
-        error: (error) => Center(child: Text('Error: $error')),
+        error: (error) => Center(child: Text('${AppString.error}: $error')),
       );
     });
   }

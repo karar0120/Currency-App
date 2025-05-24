@@ -1,3 +1,5 @@
+import 'package:currency_app/core/helper/strings_manger.dart';
+import 'package:currency_app/core/helper/values_manger.dart';
 import 'package:currency_app/features/presentation/cubit/conversion/conversion_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,15 +18,15 @@ class ConversionResult extends StatelessWidget {
           loading: () => const CircularProgressIndicator(),
           success: (conversionResult) {
             return Text(
-              'Result: ${conversionResult.toStringAsFixed(2)} $toCurrency',
+              '${AppString.result}: ${conversionResult.toStringAsFixed(2)} $toCurrency',
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: AppSize.s18,
                 fontWeight: FontWeight.bold,
               ),
             );
           },
           error: (error) => Text(
-            'Error: $error',
+            '${AppString.error}: $error',
             style: const TextStyle(color: Colors.red),
           ),
         );

@@ -128,4 +128,3 @@ A simple Flutter application to convert currencies and view conversion history.
 
 ---
 
-*Created as part of a Flutter developer task emphasizing clean architecture and robust state management.*
